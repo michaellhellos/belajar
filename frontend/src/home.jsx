@@ -1,5 +1,7 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
+import { Link, useNavigate } from 'react-router-dom';
 import './home.css';
 
 const Home = () => {
@@ -9,21 +11,16 @@ const Home = () => {
     navigate('/promo');
   };
 
+  const handleAddToCart = () => {
+    navigate('/cart');
+  };
+
+  
+
   return (
     <div className="home-container">
       {/* Header */}
-      <header className="header">
-        <div className="logo">
-          <h1>LAZADA</h1>
-        </div>
-        <nav className="nav">
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/shop">Shop</a></li>
-            <li><a href="/cart">Cart</a></li>
-          </ul>
-        </nav>
-      </header>
+      
 
       {/* Hero Section */}
       <section className="hero">
@@ -89,10 +86,31 @@ const Home = () => {
           
           {/* Add more products as needed */}
         </div>
-        <div>
+        <br />
+        <br />
+        <br />
+        <br />
+          <header className="header">
+        <div className="logo">
+          <h1>LAZADA</h1>
+        </div>
+        <nav className="nav">
+          <ul>
+            <li><a href="/home.jsx">Home</a></li>
+            <li><a href="/shop">Shop</a></li>
+            <li><a href="/cart">Cart</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <section className="hero">
+        <h2>Cari Lah Product Terbaik Mu</h2>
+        <p>Belaja Di Sini Lebih Murah Dari Store Manapun</p>
+      </section>
+      <div>
             <button onClick={handlePromoClick}>Promo Terbaru</button>
           </div>
-        
       </section>
       <section className="live-section">
         <h2>Live Now</h2>
@@ -127,17 +145,17 @@ const Home = () => {
         <div className="product-grid">
           {/* Product 1 */}
           <div className="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product 1" />
+          <img src="./assets/2.png" alt="Product 1" />
             <h3>Product 1</h3>
             <p>$19.99</p>
-            <button>Add to Cart</button>
+            <button onClick={handleAddToCart}>Add to Cart</button>
           </div>
           {/* Product 2 */}
           <div className="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product 2" />
+            <img src="./assets/2.png" alt="Product 2" />
             <h3>Product 2</h3>
             <p>$29.99</p>
-            <button>Add to Cart</button>
+            <button onClick={handleAddToCart}>Add to Cart</button>
           </div>
           {/* Product 3 */}
           <div className="product-card">

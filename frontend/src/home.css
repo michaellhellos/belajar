@@ -16,38 +16,43 @@
   align-items: center;
   background-color: #2c3e50;
   color: #ecf0f1;
-  padding: 50%;
+  padding: 20px 40px; /* Adjusted padding for better spacing */
   border-radius: 10px;
   box-sizing: border-box;
-  overflow: hidden; /* Ensure that no content overflows out of the header */
-  width: 100%; /* Ensure the header takes up the full width */
+  overflow: hidden;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added a subtle shadow for depth */
 }
 
 .header .logo h1 {
   margin: 0;
-  font-size: 1.8em;
-  white-space: nowrap; /* Prevents the logo from wrapping to a new line */
+  font-size: 2em; /* Slightly increased the logo size */
+  font-weight: 600; /* Made the logo text bolder */
+  white-space: nowrap;
 }
 
 .header .nav ul {
   list-style: none;
   display: flex;
-  gap: 60px;
-  flex-wrap: nowrap; /* Prevents the nav items from wrapping */
+  gap: 30px; /* Adjusted the gap for better spacing */
+  margin: 0; /* Removed default margin */
+  padding: 0; /* Removed default padding */
 }
 
 .header .nav ul li a {
   color: #ecf0f1;
   text-decoration: none;
   font-size: 1em;
-  padding: 10px 15px;
-  transition: background-color 0.3s ease;
-  display: block; /* Ensures the clickable area covers the padding */
+  padding: 10px 20px; /* Adjusted padding for a more balanced look */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform for hover effect */
+  display: block;
+  border-radius: 5px;
 }
 
 .header .nav ul li a:hover {
   background-color: #34495e;
-  border-radius: 5px;
+  transform: scale(1.05); /* Slightly enlarges the link on hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds a shadow on hover for a 'lift' effect */
 }
 
 
@@ -103,6 +108,7 @@
   height: auto;
   margin-bottom: 20px;
   border-radius: 8px;
+  background-color: #ccc;
 }
 
 .product-card h3 {
