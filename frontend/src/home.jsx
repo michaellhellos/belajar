@@ -96,9 +96,9 @@ const Home = () => {
         </div>
         <nav className="nav">
           <ul>
-            <li><a href="/home.jsx">Home</a></li>
-            <li><a href="/shop">Shop</a></li>
-            <li><a href="/cart">Cart</a></li>
+            <li><Link to="/home">Home</Link></li>
+            <li><Link to="/cart">Cart</Link></li>
+            <li><Link to="/account">Akun</Link></li>
           </ul>
         </nav>
       </header>
