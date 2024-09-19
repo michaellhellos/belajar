@@ -1,47 +1,32 @@
+// eslint-disable-next-line no-undef
 const express = require('express');
+// eslint-disable-next-line no-undef
 const mongoose = require('mongoose');
+// eslint-disable-next-line no-undef
 const cors = require('cors');
+// eslint-disable-next-line no-undef
+const authRoutes = require('./routes/auth');
 
 const app = express();
-const PORT = 5000;
 
 // Middleware
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/tokobersama', {
+mongoose.connect('mongodb://localhost:27017/yourdbname', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.error('Could not connect to MongoDB:', err));
+.then(() => console.log('MongoDB connected'))
+.catch((err) => console.log('MongoDB connection error:', err));
 
-// Define the User schema and model
-const userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+// Routes
+app.use('/api/auth', authRoutes);
+
+// Start the server
+// eslint-disable-next-line no-undef
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
-// Explicitly set the collection name to "anggota"
-const User = mongoose.model('User', userSchema, 'anggota');
-
-// API route for registering a user
-app.post('/register', async (req, res) => {
-    console.log('Received registration data:', req.body);  // Log untuk memeriksa data yang diterima
-    try {
-      const { email, password } = req.body;
-      const user = new User({ email, password });
-      await user.save();
-      console.log('User registered successfully');
-      res.status(201).json({ message: 'User registered successfully' });
-    } catch (error) {
-      console.error('Error during registration:', error);  // Log untuk melihat detail error
-      if (error.code === 11000) {
-        res.status(400).json({ message: 'Email already in use' });
-      } else {
-        res.status(500).json({ message: 'Error registering user', error });
-      }
-    }
-  });
-  
