@@ -1,4 +1,4 @@
-/* Home.css */
+                                                                    /* Home.css */
 .home-container {
   font-family: 'Roboto', sans-serif;
   max-width: 1200px;
@@ -151,4 +151,18 @@
 .footer p {
   margin: 0;
   font-size: 1em;
+}
+.rating {
+  display: flex;
+  align-items: center; /* Agar teks dan gambar sejajar secara vertikal */
+}
+
+.star-icon {
+  width: 50px;
+  height: 40px; /* Ukuran gambar bintang */
+  margin-right: 5px; /* Spasi antara gambar dan teks */
+}
+
+.rating span {
+  font-size: 20px; /* Ukuran font untuk teks rating */
 }

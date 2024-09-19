@@ -47,6 +47,7 @@ const Account = () => {
         <button onClick={handleUpdatePassword}>Update Password</button>
       </div>
       <button className="logout-button" onClick={handleLogout}>Log Out</button>
+      <button>register</button>
     </div>
   );
 };
