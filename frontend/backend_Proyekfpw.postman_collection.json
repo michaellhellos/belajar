@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "929bb6c9-a420-422d-8af6-0ec9acd11f9a",
+		"name": "backend_Proyekfpw",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32821763"
+	},
+	"item": [
+		{
+			"name": "hanya_bisa_dilakukan_admin",
+			"item": [
+				{
+					"name": "admin_ngeliat kariawan",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Login_admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin\",\r\n  \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/login",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/mengaktifkan/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mengaktifkan",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ed83adbe97bf293be1a6d2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dinonaktifkan",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/dinonaktifkan/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"dinonaktifkan",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ed83adbe97bf293be1a6d2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"michaell123@gmail.com\",\r\n  \"password\": \"michaell\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/register",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add_product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Tas Altopelangi",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "100000",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "postman-cloud:///1ef7753c-35ba-49d0-82da-1980cf6a9662"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:5000/add-product",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"add-product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"michaell123@gmail.com\",\r\n  \"password\": \"michaell\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

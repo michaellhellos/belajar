@@ -9,7 +9,9 @@ import PromoPage from './PromoPage'; // Import PromoPage component
 import Cart from './cart'; // Import Cart component
 import Account from './account'; // Import Account component
 import Checkout from './Checkout';
+import TotalBarang from './Total_Barang';
 import './App.css'; // Import your global styles
+
 
 const App = () => {
   const handleLogin = (credentials) => {
@@ -32,6 +34,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} /> {/* Route for Cart Page */}
           <Route path="/account" element={<Account />} /> {/* Route for Account Page */}
           <Route path="/checkout" element={<Checkout />} /> {/* Route for Checkout Page */}
+          <Route path="/totalbarang" element={<TotalBarang />} />
           <Route path="*" element={<Navigate to="/" />} /> {/* Redirect any unknown routes to the login page */}
         </Routes>
       </div>

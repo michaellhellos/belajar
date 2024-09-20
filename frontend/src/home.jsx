@@ -11,9 +11,9 @@ import mac from './assets/mac.png';
 import iphone13 from './assets/iphone13.jpeg';
 import iphonese3 from './assets/iphonese3.jpeg';
 import ipadpro from './assets/ipadpro.jpg';
-import vgartx from './assets/vgartx.jpeg'
-import laptoplegion from './assets/laptoplegion.jpeg'
-import samsungs24 from './assets/samsungs24.png'
+// import vgartx from './assets/vgartx.jpeg'
+// import laptoplegion from './assets/laptoplegion.jpeg'
+// import samsungs24 from './assets/samsungs24.png'
 const Home = () => {
   const navigate = useNavigate();
 
@@ -23,6 +23,9 @@ const Home = () => {
 
   const handleAddToCart = () => {
     navigate('/cart');
+  };
+  const handleAddToTotalBarang = () => {
+    navigate('/TotalBarang');
   };
 
   
@@ -166,7 +169,7 @@ const Home = () => {
             <img src={lokasi} alt="Bintang" className="star-icon" />
             <span>Surabaya</span> 
           </div>
-            <button onClick={handleAddToCart}>Add to Cart</button>
+            <button onClick={handleAddToTotalBarang}>Check Out</button>
           </div>
 
           <div className="product-card">
@@ -181,7 +184,7 @@ const Home = () => {
             <img src={lokasi} alt="Bintang" className="star-icon" />
             <span>Jakarta</span> 
           </div>
-            <button onClick={handleAddToCart}>Add to Cart</button>
+            <button onClick={handleAddToCart}>Check Out</button>
           </div>
 
           <div className="product-card">
@@ -196,7 +199,7 @@ const Home = () => {
             <img src={lokasi} alt="Bintang" className="star-icon" />
             <span>Jakarta</span> 
           </div>
-            <button>Add to Cart</button>
+            <button>Check Out</button>
           </div>
 
           <div className="product-card">
@@ -211,7 +214,7 @@ const Home = () => {
             <img src={lokasi} alt="Bintang" className="star-icon" />
             <span>Jakarta</span> 
           </div>
-            <button>Add to Cart</button>
+            <button>Check Out</button>
           </div>
           
           <div className="product-card">
@@ -226,67 +229,7 @@ const Home = () => {
             <img src={lokasi} alt="Bintang" className="star-icon" />
             <span>Jakarta</span> 
           </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="product-card">
-            <img src={ipadpro} alt="Product 1" />
-            <h3>Product 3</h3>
-            <p>$39.99</p>
-            <div className="rating">
-            <img src={photo2} alt="Bintang" className="star-icon" />
-            <span>4.5     500++ Terjual</span> 
-          </div>
-          <div className="rating">
-            <img src={lokasi} alt="Bintang" className="star-icon" />
-            <span>Jakarta</span> 
-          </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="product-card">
-          <img src={vgartx} alt="Product 1" />
-            <h3>Product 3</h3>
-            <p>$39.99</p>
-            <div className="rating">
-            <img src={photo2} alt="Bintang" className="star-icon" />
-            <span>4.5     500++ Terjual</span> 
-          </div>
-          <div className="rating">
-            <img src={lokasi} alt="Bintang" className="star-icon" />
-            <span>Jakarta</span> 
-          </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="product-card">
-          <img src={laptoplegion} alt="Product 1" />
-            <h3>Product 3</h3>
-            <p>$39.99</p>
-            <div className="rating">
-            <img src={photo2} alt="Bintang" className="star-icon" />
-            <span>4.5     500++ Terjual</span> 
-          </div>
-          <div className="rating">
-            <img src={lokasi} alt="Bintang" className="star-icon" />
-            <span>Jakarta</span> 
-          </div>
-            <button>Add to Cart</button>
-          </div>
-          
-          <div className="product-card">
-          <img src={samsungs24} alt="Product 1" />
-            <h3>Product 3</h3>
-            <p>$39.99</p>
-            <div className="rating">
-            <img src={photo2} alt="Bintang" className="star-icon" />
-            <span>4.5     500++ Terjual</span> 
-          </div>
-          <div className="rating">
-            <img src={lokasi} alt="Bintang" className="star-icon" />
-            <span>Jakarta</span> 
-          </div>
-            <button>Add to Cart</button>
+            <button>Check Out</button>
           </div>
 
           {/* Add more products as needed */}

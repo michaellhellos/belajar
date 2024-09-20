@@ -17,6 +17,11 @@ const Login = ({ onLogin }) => {
     navigate('/home');
   };
 
+  const handleRegisterRedirect = () => {
+    // Navigate to the Register page
+    navigate('/register');
+  };
+
   return (
     <div className="form-container">
       <h2>Login</h2>
@@ -37,6 +42,7 @@ const Login = ({ onLogin }) => {
         />
         <button type="submit">Login</button>
       </form>
+      <p>Belum punya akun? <button onClick={handleRegisterRedirect} className="register-button">Register</button></p>
     </div>
   );
 };

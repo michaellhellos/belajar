@@ -7,6 +7,7 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    console.log('Data yang akan dikirim:', { email, password }); // Log data yang akan dikirim
     try {
       const response = await axios.post('http://localhost:5000/register', { email, password });
       console.log('Registration response:', response.data);
@@ -16,8 +17,6 @@ const Register = () => {
       alert(error.response?.data?.message || 'Registration failed');
     }
   };
-  
-  
 
   return (
     <div className="form-container">
