@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Login from './login';
 import Register from './Register';
 import Home from './home';
+import Homeadmin from './homeadmin';
 import PromoPage from './PromoPage'; // Import PromoPage component
 import Cart from './cart'; // Import Cart component
 import Account from './account'; // Import Account component
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/" element={<Login onLogin={handleLogin} />} />
           <Route path="/register" element={<Register onRegister={handleRegister} />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/homeadmin" element={<Homeadmin />} />
           <Route path="/promo" element={<PromoPage />} /> {/* Route for Promo Page */}
           <Route path="/cart" element={<Cart />} /> {/* Route for Cart Page */}
           <Route path="/account" element={<Account />} /> {/* Route for Account Page */}

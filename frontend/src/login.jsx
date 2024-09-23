@@ -1,24 +1,45 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// eslint-disable-next-line react/prop-types
-const Login = ({ onLogin }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Call the login handler prop
-    onLogin({ email, password });
-    
-    // Simulate successful login, then navigate to home
-    navigate('/home');
+
+    try {
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Check if the user is an admin
+        if (data.isAdmin) {
+          alert('Login sukses sebagai admin');
+          navigate('/homeadmin'); // Navigate to HomeAdmin page for admin
+        } else {
+          alert('Login sukses sebagai user');
+          navigate('/home'); // Navigate to Home page for regular users
+        }
+      } else {
+        setErrorMessage(data.message); // Display error message
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setErrorMessage('Terjadi kesalahan pada server');
+    }
   };
 
   const handleRegisterRedirect = () => {
-    // Navigate to the Register page
     navigate('/register');
   };
 
@@ -42,6 +63,7 @@ const Login = ({ onLogin }) => {
         />
         <button type="submit">Login</button>
       </form>
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <p>Belum punya akun? <button onClick={handleRegisterRedirect} className="register-button">Register</button></p>
     </div>
   );

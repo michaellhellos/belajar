@@ -1,5 +1,5 @@
 import express from 'express';
-import User from '../models/User.js';
+import User from '../models/user.js';
 import Product from '../models/Product.js';
 import multer from 'multer';
 import path from 'path';
@@ -56,14 +56,14 @@ router.post('/login', async (req, res) => {
 
   try {
     // Check for admin credentials
-    if (email === 'admin' && password === 'admin123') {
-      return res.status(200).json({ message: 'Selamat datang admin' });
+    if (email === 'admin123@gmail.com' && password === 'admin123') {
+      return res.status(200).json({ message: 'Selamat datang admin', isAdmin: true });
     }
 
     // Check if the user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: 'Anda tidak bisa login' });
+      return res.status(401).json({ message: 'Email atau password salah' });
     }
 
     // Check if the user is active
@@ -71,19 +71,19 @@ router.post('/login', async (req, res) => {
       return res.status(403).json({ message: 'Anda sudah keluar' });
     }
 
-    // Here, you should ideally compare hashed passwords.
-    // Assuming you have a method to compare passwords:
-    const isMatch = password === user.password; // Change this to a proper hash comparison
+    // Assuming you have hashed passwords (replace with real hash comparison)
+    const isMatch = password === user.password; 
     if (!isMatch) {
-      return res.status(401).json({ message: 'Anda tidak bisa login' });
+      return res.status(401).json({ message: 'Email atau password salah' });
     }
 
-    res.status(200).json({ message: 'Login sukses' });
+    res.status(200).json({ message: 'Login sukses', isAdmin: false });
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ message: 'Terjadi kesalahan pada server' });
   }
 });
+
 
 //admin tambah product
 router.post('/add-product', upload.single('image'), async (req, res) => {
@@ -162,5 +162,13 @@ router.patch('/mengaktifkan/:id', async (req, res) => {
     res.status(500).json({ message: 'Terjadi kesalahan pada server' });
   }
 });
-
+//melihat semua barang yang ada di databse nya 
+router.get('/products', async (req, res) => {
+  try {
+    const products = await Product.find(); // Fetch all products
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching products' });
+  }
+});
 export default router;
