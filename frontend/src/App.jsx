@@ -11,6 +11,9 @@ import Cart from './cart'; // Import Cart component
 import Account from './account'; // Import Account component
 import Checkout from './Checkout';
 import TotalBarang from './Total_Barang';
+import Kariawan from './kariawan';
+import AddKariawan from './addkariawan';
+import AddProduct from './addproduct';
 import './App.css'; // Import your global styles
 
 
@@ -37,6 +40,9 @@ const App = () => {
           <Route path="/account" element={<Account />} /> {/* Route for Account Page */}
           <Route path="/checkout" element={<Checkout />} /> {/* Route for Checkout Page */}
           <Route path="/totalbarang" element={<TotalBarang />} />
+          <Route path="/kariawan" element={<Kariawan />} />
+          <Route path="/addkariawan" element={<AddKariawan />} />
+          <Route path="/addproduct" element={<AddProduct />} />
           <Route path="*" element={<Navigate to="/" />} /> {/* Redirect any unknown routes to the login page */}
         </Routes>
       </div>

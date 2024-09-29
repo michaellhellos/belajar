@@ -64,7 +64,7 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      <p>Belum punya akun? <button onClick={handleRegisterRedirect} className="register-button">Register</button></p>
+      
     </div>
   );
 };

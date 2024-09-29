@@ -1,6 +1,7 @@
 import express from 'express';
 import User from '../models/user.js';
 import Product from '../models/Product.js';
+import Products from '../models/Product2.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -25,7 +26,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 // Route untuk registrasi
-router.post('/register', async (req, res) => {
+router.post('/registerkariawan', async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -140,7 +141,7 @@ router.patch('/dinonaktifkan/:id', async (req, res) => {
     res.status(500).json({ message: 'Terjadi kesalahan pada server' });
   }
 });
-//di aktif kan lagi
+
 // Route untuk mengaktifkan kembali karyawan
 router.patch('/mengaktifkan/:id', async (req, res) => {
   const { id } = req.params;
@@ -171,4 +172,55 @@ router.get('/products', async (req, res) => {
     res.status(500).json({ message: 'Error fetching products' });
   }
 });
+
+//membeli product
+router.post('/purchase', async (req, res) => {
+  const { productId, quantity } = req.body;
+
+  try {
+    const product = await Product.findOne({ productId });
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    if (product.stock < quantity) {
+      return res.status(400).json({ message: 'Not enough stock available' });
+    }
+    const totalPrice = product.price * quantity;
+    product.stock -= quantity;
+    await product.save();
+    res.json({
+      message: 'Purchase successful',
+      totalPrice
+      // remainingStock: product.stock
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error processing purchase' });
+  }
+});
+
+
+
+//nambahakan stock koper nya 
+router.post('/Tambah_koper', async (req, res) => {
+  try {
+    const { productId, productName, colors, totalStock } = req.body;
+
+    // Buat objek Product baru
+    const newProducts = new Products({
+      productId,
+      productName,
+      colors,
+      totalStock
+    });
+
+    // Simpan produk ke database
+    await newProducts.save();
+
+    res.status(201).json({ message: 'Product added successfully', products: newProducts });
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding product', error: error.message });
+  }
+});
+
+
 export default router;

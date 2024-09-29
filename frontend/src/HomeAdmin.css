@@ -1,0 +1,116 @@
+/* General styling for the Admin page */
+.home-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    min-height: 100vh;
+  }
+  
+  /* Header styling */
+  header {
+    background-color: #3f51b5;
+    width: 100%;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+  
+  /* Admin summary section styling */
+  .admin-summary {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 20px 0;
+    
+  }
+  
+  .summary-box {
+    background-color: aqua;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .summary-box h3 {
+    margin-bottom: 10px;
+  }
+  
+  .add-product-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .add-product-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Product list styling */
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+  }
+  
+  .product-card {
+    background-color: #fff;
+    width: 250px;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .product-actions {
+    margin-top: 10px;
+  }
+  
+  .product-actions button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .product-actions button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Footer styling */
+  footer {
+    background-color: #3f51b5;
+    color: white;
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+  }
+  
