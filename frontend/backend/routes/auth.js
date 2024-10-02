@@ -2,6 +2,8 @@ import express from 'express';
 import User from '../models/user.js';
 import Product from '../models/Product.js';
 import Products from '../models/Product2.js';
+import Stock from '../models/Stock.js';
+import StockKeluar from '../models/StockKeluar.js'
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -27,10 +29,16 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 // Route untuk registrasi
 router.post('/registerkariawan', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body; // Include role in destructuring
 
   if (!email || !password) {
     return res.status(400).json({ message: 'Email dan password harus diisi' });
+  }
+
+  // Validate role if provided
+  const validRoles = ['admin', 'warehouse_manager', 'employee'];
+  if (role && !validRoles.includes(role)) {
+    return res.status(400).json({ message: 'Role tidak valid' });
   }
 
   try {
@@ -39,7 +47,7 @@ router.post('/registerkariawan', async (req, res) => {
       return res.status(400).json({ message: 'Email sudah terdaftar' });
     }
 
-    user = new User({ email, password });
+    user = new User({ email, password, role: role || 'employee' }); // Default to 'employee' if role is not provided
     await user.save();
     res.status(201).json({ message: 'Registrasi berhasil' });
   } catch (error) {
@@ -47,6 +55,7 @@ router.post('/registerkariawan', async (req, res) => {
     res.status(500).json({ message: 'Terjadi kesalahan pada server' });
   }
 });
+
 //login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -58,7 +67,7 @@ router.post('/login', async (req, res) => {
   try {
     // Check for admin credentials
     if (email === 'admin123@gmail.com' && password === 'admin123') {
-      return res.status(200).json({ message: 'Selamat datang admin', isAdmin: true });
+      return res.status(200).json({ message: 'Selamat datang admin', isAdmin: true, redirectTo: '/HomeAdmin' });
     }
 
     // Check if the user exists
@@ -73,12 +82,18 @@ router.post('/login', async (req, res) => {
     }
 
     // Assuming you have hashed passwords (replace with real hash comparison)
-    const isMatch = password === user.password; 
+    const isMatch = password === user.password; // Replace with a real hash check
     if (!isMatch) {
       return res.status(401).json({ message: 'Email atau password salah' });
     }
 
-    res.status(200).json({ message: 'Login sukses', isAdmin: false });
+    // Determine the redirect path based on the user's role
+    let redirectTo = '/home'; // Default redirect for employees
+    if (user.role === 'warehouse_manager') {
+      redirectTo = '/homekepalagudang'; // Redirect for warehouse manager
+    }
+
+    res.status(200).json({ message: 'Login sukses', isAdmin: false, redirectTo });
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ message: 'Terjadi kesalahan pada server' });
@@ -221,6 +236,118 @@ router.post('/Tambah_koper', async (req, res) => {
     res.status(500).json({ message: 'Error adding product', error: error.message });
   }
 });
+//nambahin stock buat kepala gudang 
+router.post('/add-stock', async (req, res) => {
+  const { productId, itemType, quantity } = req.body;
 
+  if (!productId || !itemType || quantity === undefined) {
+    return res.status(400).json({ message: 'Semua field harus diisi' });
+  }
+
+  try { 
+    const newStock = new Stock({ productId, itemType, quantity });
+    await newStock.save();
+    res.status(201).json({ message: 'Stock berhasil ditambahkan', stock: newStock });
+  } catch (error) {
+    console.error('Error adding stock:', error);
+    res.status(500).json({ message: 'Terjadi kesalahan pada server' });
+  }
+});
+
+router.get('/stock', async (req, res) => {
+  try {
+    const stockData = await Stock.find(); // Fetch all Stock data
+    res.json(stockData); // Send the fetched data as JSON
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching Stock' });
+  }
+});
+
+router.post('/stock/reduce', async (req, res) => {
+  const { productId, quantity, handledBy } = req.body;
+
+  // Validasi input
+  if (!productId || !quantity || quantity <= 0 || !handledBy) {
+    return res.status(400).json({ message: 'Product ID, valid quantity, and handler name are required' });
+  }
+
+  try {
+    // Cari produk berdasarkan productId
+    const stockItem = await Stock.findOne({ productId });
+
+    if (!stockItem) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Cek apakah stok cukup
+    if (stockItem.quantity < quantity) {
+      return res.status(400).json({ message: 'Insufficient stock available' });
+    }
+
+    // Kurangi stok
+    stockItem.quantity -= quantity;
+    await stockItem.save(); // Simpan perubahan stok
+
+    // Tambahkan record ke StockKeluar
+    const stockKeluarItem = new StockKeluar({
+      productId: stockItem.productId,
+      productName: stockItem.itemType, // Sesuaikan dengan nama produk
+      quantity: quantity,
+      handledBy: handledBy
+    });
+
+    await stockKeluarItem.save(); // Simpan data barang keluar
+
+    // Response sukses
+    res.json({ 
+      message: 'Stock reduced and recorded in StockKeluar', 
+      stock: stockItem, 
+      stockKeluar: stockKeluarItem 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error processing stock reduction' });
+  }
+});
+router.get('/notifications', async (req, res) => {
+  try {
+    const notifications = await StockKeluar.find(); // Get all stock-out notifications
+    res.json(notifications);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching notifications' });
+  }
+});
+
+// Accept a notification (set isReceived to true)
+router.patch('/notifications/:id/accept', async (req, res) => {
+  try {
+    const notification = await StockKeluar.findById(req.params.id);
+    if (!notification) return res.status(404).send('Notification not found.');
+
+    notification.isReceived = true; // Update the acceptance status to true
+    await notification.save();
+
+    res.send(notification);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});
+
+// Reject a notification (set isReceived to false)
+router.patch('/notifications/:id/reject', async (req, res) => {
+  try {
+    const notification = await StockKeluar.findById(req.params.id);
+    if (!notification) return res.status(404).send('Notification not found.');
+
+    notification.isReceived = false; // Update the acceptance status to false
+    await notification.save();
+
+    res.send(notification);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});
 
 export default router;

@@ -166,3 +166,16 @@
 .rating span {
   font-size: 20px; /* Ukuran font untuk teks rating */
 }
+.notification-list {
+  margin-top: 20px;
+}
+
+.notification-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.notification-card button {
+  margin-right: 5px;
+}

@@ -9,7 +9,10 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
+    // Reset error message on new login attempt
+    setErrorMessage('');
+  
     try {
       const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
@@ -18,41 +21,38 @@ const Login = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-        // Check if the user is an admin
-        if (data.isAdmin) {
-          alert('Login sukses sebagai admin');
-          navigate('/homeadmin'); // Navigate to HomeAdmin page for admin
-        } else {
-          alert('Login sukses sebagai user');
-          navigate('/home'); // Navigate to Home page for regular users
-        }
+        // Navigate based on the redirect path from the response
+        alert(data.message); // Show success message
+        navigate(data.redirectTo); // Use redirectTo from response
       } else {
-        setErrorMessage(data.message); // Display error message
+        // Display error message if login fails
+        setErrorMessage(data.message);
       }
     } catch (error) {
       console.error('Error during login:', error);
       setErrorMessage('Terjadi kesalahan pada server');
     }
   };
-
+  
   const handleRegisterRedirect = () => {
     navigate('/register');
   };
 
   return (
-    <div className="form-container">
+    <div style={styles.container}>
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} style={styles.form}>
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          style={styles.input}
         />
         <input
           type="password"
@@ -60,13 +60,58 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          style={styles.input}
         />
-        <button type="submit">Login</button>
+        <button type="submit" style={styles.button}>Login</button>
       </form>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      
+      <p style={styles.registerPrompt}>
+        Belum punya akun?{' '}
+        <span onClick={handleRegisterRedirect} style={styles.registerLink}>
+          Daftar di sini
+        </span>
+      </p>
     </div>
   );
+};
+
+// Inline styles for better presentation
+const styles = {
+  container: {
+    maxWidth: '400px',
+    margin: '0 auto',
+    padding: '20px',
+    backgroundColor: '#f4f4f4',
+    borderRadius: '8px',
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  input: {
+    padding: '10px',
+    margin: '10px 0',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
+  },
+  button: {
+    padding: '10px',
+    backgroundColor: '#28a745',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+  },
+  registerPrompt: {
+    marginTop: '15px',
+    textAlign: 'center',
+  },
+  registerLink: {
+    color: '#007bff',
+    cursor: 'pointer',
+    textDecoration: 'underline',
+  },
 };
 
 export default Login;

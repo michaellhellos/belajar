@@ -14,6 +14,10 @@ import TotalBarang from './Total_Barang';
 import Kariawan from './kariawan';
 import AddKariawan from './addkariawan';
 import AddProduct from './addproduct';
+import Homekepalagudang from './homekepalagudang'
+import Tambahbarangkepalagudang from './tambahbarangkepalagudang'
+import Kepalagudangliatbarang from './kepalagudangliatbarang'
+import Barang_keluar_darigudang from './barang_keluar_darigudang'
 import './App.css'; // Import your global styles
 
 
@@ -43,6 +47,10 @@ const App = () => {
           <Route path="/kariawan" element={<Kariawan />} />
           <Route path="/addkariawan" element={<AddKariawan />} />
           <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="/homekepalagudang" element={<Homekepalagudang />} />
+          <Route path="/tambahbarangkepalagudang" element={<Tambahbarangkepalagudang />} />
+          <Route path="/kepalagudangliatbarang" element={<Kepalagudangliatbarang />} />
+          <Route path="/barang_keluar_darigudang" element={<Barang_keluar_darigudang />} />
           <Route path="*" element={<Navigate to="/" />} /> {/* Redirect any unknown routes to the login page */}
         </Routes>
       </div>

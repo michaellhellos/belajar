@@ -4,8 +4,9 @@ import axios from 'axios';
 const AddKaryawan = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('employee'); // State for role selection
   const [message, setMessage] = useState('');
-  const [success, setSuccess] = useState(false); // New state to track success
+  const [success, setSuccess] = useState(false); // State to track success
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,11 +18,12 @@ const AddKaryawan = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/registerkariawan', { email, password });
+      const response = await axios.post('http://localhost:5000/registerkariawan', { email, password, role });
       setMessage('Karyawan berhasil ditambahkan!');
       setSuccess(true); // Set success to true on successful addition
       setEmail('');
       setPassword('');
+      setRole('employee'); // Reset role to default
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.message);
@@ -56,6 +58,18 @@ const AddKaryawan = () => {
             style={styles.input}
           />
         </div>
+        <div style={styles.inputGroup}>
+          <label>Role:</label>
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            style={styles.input}
+          >
+            <option value="admin">Admin</option>
+            <option value="warehouse_manager">Warehouse Manager</option>
+            <option value="employee">Employee</option>
+          </select>
+        </div>
         <button type="submit" style={styles.button}>Tambah</button>
         {message && <p style={{ color: success ? 'green' : 'red' }}>{message}</p>}
       </form>
@@ -70,7 +84,7 @@ const styles = {
     padding: '20px',
     backgroundColor: '#f4f4f4',
     borderRadius: '8px',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
   },
   form: {
     display: 'flex',
@@ -92,7 +106,7 @@ const styles = {
     border: 'none',
     borderRadius: '4px',
     cursor: 'pointer',
-  }
+  },
 };
 
 export default AddKaryawan;
